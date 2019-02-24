@@ -4,7 +4,7 @@ public abstract class AnimalAbstract {
 
     public abstract void voice();
 
-    public void jump(){
+    void jump(){
         System.out.println ("Животное прыгнуло");
     }
 
