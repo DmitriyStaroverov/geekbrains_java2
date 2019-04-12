@@ -18,14 +18,8 @@ public class Arr7 {
             if (nIndex >= arr.length){
                 nIndex = i-arr.length+n;
             }
-
-
             System.out.println(nIndex);
-
-
-
         }
-
         System.out.println(Arrays.toString(arr));
     }
 
