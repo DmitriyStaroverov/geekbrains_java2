@@ -2,27 +2,20 @@ package Lesson5;
 
 public class MainThread {
     public static void main(String[] args) {
-//        MyThread myThread_1 = new MyThread();
-//        MyThread myThread_2 = new MyThread();
-//        myThread_1.start();
-//        myThread_2.start();
-//        Thread thread1 = new Thread(new MyRunnableClass());
-//        Thread thread2 = new Thread(new MyRunnableClass());
-//        thread1.start();
-//        thread2.start();
-        Thread t1 = new Thread(new MyRunnableClass());
-        Thread t2 = new Thread(new MyRunnableClass());
-        t1.start();
-        t2.start();
-
+        MyThread myThread_1 = new MyThread();
+        MyThread myThread_2 = new MyThread();
+        myThread_1.start();
+        myThread_2.start();
         try {
-            t1.join();
-            t2.join();
+            myThread_1.join();
+            myThread_2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         System.out.println("END");
+
+
     }
 }
 
@@ -31,7 +24,7 @@ class MyThread extends Thread {
     public void run() {
         for (int i = 0; i < 10; i++) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -41,15 +34,28 @@ class MyThread extends Thread {
 }
 
 class MyRunnableClass implements Runnable {
+    int num;
+
+    public MyRunnableClass(int num) {
+        this.num = num;
+    }
+
+    public static void main(String[] args) {
+        MyRunnableClass myRunnableClass = new MyRunnableClass (1);
+        MyRunnableClass myRunnableClass2 = new MyRunnableClass (2);
+        new Thread ( myRunnableClass ).start ();
+        new Thread ( myRunnableClass2 ).start ();
+    }
+
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(i);
+            System.out.println("Поток: " + num + " - сигнал: " + i);
         }
     }
 }
