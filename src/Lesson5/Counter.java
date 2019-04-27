@@ -16,95 +16,102 @@ public class Counter {
         this.c = c;
     }
 
-    public synchronized void dec() {
+    public void  dec() {
         c--;
     }
 
-    public synchronized void inc() {
+    public void inc() {
         c++;
     }
 }
 
 class MyCounter {
     public static void main(String[] args) {
-//        Counter counter = new Counter(0);
-//        Thread t1 = new Thread(new Runnable() {
+        long time =  System.currentTimeMillis ();
+
+        Counter counter = new Counter(0);
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 1000000; i++) {
+                    counter.inc();
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 1000000; i++) {
+                    counter.dec();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(counter.getC());
+        System.out.println (System.currentTimeMillis () - time);
+
+
+
+
+//        Box box = new Box ();
+//
+//        new Thread ( new Runnable () {
 //            @Override
 //            public void run() {
-//                for (int i = 0; i < 1000000; i++) {
-//                    counter.inc();
-//                }
+//                box.doDomeThing ();
 //            }
-//        });
+//        } ).start ();
 //
-//        Thread t2 = new Thread(new Runnable() {
+//        new Thread ( new Runnable () {
 //            @Override
 //            public void run() {
-//                for (int i = 0; i < 1000000; i++) {
-//                    counter.dec();
-//                }
+//                box.doDomeThing ();
 //            }
-//        });
+//        } ).start ();
 //
-//        t1.start();
-//        t2.start();
 //
-//        try {
-//            t1.join();
-//            t2.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println(counter.getC());
-        Box box = new Box();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                box.doDomeThing();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                box.doDomeThing();
-            }
-        }).start();
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                box.doDomeThing();
-            }
-        }).start();
+//        new Thread ( new Runnable () {
+//            @Override
+//            public void run() {
+//                box.doDomeThing ();
+//            }
+//        } ).start ();
 
 
     }
 }
 
 class Box {
-    Object object = new Object();
+    Object object = new Object ();
 
     void doDomeThing() {
-        System.out.println(1);
+        System.out.println ( 1 );
         try {
-            Thread.sleep(100);
+            Thread.sleep ( 100 );
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace ();
         }
 
         synchronized (object) {
-            System.out.println(998);
+            System.out.println ( 998 );
             try {
-                Thread.sleep(100);
+                Thread.sleep ( 100 );
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                e.printStackTrace ();
             }
-            System.out.println(999);
+            System.out.println ( 999 );
         }
-        System.out.println(2);
+        System.out.println ( 2 );
     }
 }

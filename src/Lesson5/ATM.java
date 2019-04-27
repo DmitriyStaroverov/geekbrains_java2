@@ -129,7 +129,7 @@ class MainDaemon{
                 int seconds = 0;
                 while (true){
                     seconds++;
-                    System.out.println("time" + seconds + ".");
+                    System.out.println("time " + seconds + ".");
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -181,7 +181,7 @@ class Store{
      * положить товар
      */
     public synchronized void put(){
-        while (product >= 3 ){
+        while (product >= 5 ){
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -211,7 +211,7 @@ class Producer implements Runnable{
 
     @Override
     public void run() {
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 16; i++) {
             store.put();
         }
     }
@@ -226,7 +226,7 @@ class Consuner implements Runnable{
 
     @Override
     public void run() {
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 16; i++) {
             store.get();
         }
     }
